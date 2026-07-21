@@ -45,7 +45,7 @@ export function DnaCard({
   return (
     <div className="panel track-card">
       <h3>
-        {track.title} <span style={{ color: "var(--muted)", fontWeight: 400 }}>— {track.artist}</span>
+        {track.title} <span style={{ color: "var(--muted)", fontWeight: 400 }}>by {track.artist}</span>
       </h3>
       <div className="track-meta">
         {new Date(track.createdAt).toLocaleString()}

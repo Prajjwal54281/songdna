@@ -1,5 +1,5 @@
 // Mirrors the API's domain types (apps/api/src/domain/types.ts). Kept as a
-// small hand-written duplicate rather than a shared package — the two apps
+// small hand-written duplicate rather than a shared package. The two apps
 // are simple enough that a shared-types package would be more scaffolding
 // than the project needs; if this grows, promote it to a workspace package.
 
@@ -35,7 +35,7 @@ export interface Analysis {
 }
 
 /** Objective signal features extracted from an uploaded WAV file's decoded
- * PCM samples — see apps/api/src/audio/{wav,dsp}.ts. */
+ * PCM samples. See apps/api/src/audio/{wav,dsp}.ts. */
 export interface AudioFeatures {
   id: string;
   trackId: string;

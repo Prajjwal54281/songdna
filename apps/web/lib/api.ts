@@ -40,7 +40,7 @@ export async function uploadAudio(
 ): Promise<{ audioFeatures: AudioFeatures }> {
   const formData = new FormData();
   formData.append("file", file);
-  // No Content-Type header here — the browser sets the multipart boundary itself.
+  // No Content-Type header here. The browser sets the multipart boundary itself.
   const res = await fetch(`${API_URL}/tracks/${trackId}/audio`, {
     method: "POST",
     body: formData,
