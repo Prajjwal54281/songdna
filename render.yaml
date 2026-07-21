@@ -1,11 +1,10 @@
-# Render Blueprint — deploys the whole stack (Postgres + API + web) from one
-# file. In the Render dashboard: New -> Blueprint -> point at this repo ->
-# Render reads this file and provisions everything below.
+# Render Blueprint — deploys Postgres + the API from one file. The web app
+# deploys separately to Vercel (its ideal host for a Next.js app) — see
+# README.md "Deploying" for the full split and exact steps.
 #
-# Two env vars are marked `sync: false` (LLM key, and the web app's API URL)
-# because they either shouldn't be committed (a secret) or aren't known until
-# the API service exists (its assigned public URL). Set both manually in the
-# dashboard after the first deploy — see README.md "Deploying to Render".
+# GEMINI_API_KEY / ANTHROPIC_API_KEY are marked `sync: false` since secrets
+# shouldn't be committed — set at least one manually in the dashboard after
+# the first deploy.
 
 databases:
   - name: songdna-db
@@ -33,22 +32,7 @@ services:
         value: claude-opus-4-8
       - key: MAX_AUDIO_UPLOAD_BYTES
         value: "20971520"
-      # Set at least one of these two in the dashboard after first deploy —
-      # the free Gemini key from aistudio.google.com/apikey is the
-      # budget-conscious default this project is built around.
       - key: GEMINI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY
-        sync: false
-
-  - type: web
-    name: songdna-web
-    runtime: docker
-    dockerfilePath: ./apps/web/Dockerfile
-    dockerContext: ./apps/web
-    plan: free
-    envVars:
-      # Set after songdna-api's first deploy, once you know its assigned
-      # public URL (e.g. https://songdna-api.onrender.com/api) — see README.
-      - key: NEXT_PUBLIC_API_URL
         sync: false

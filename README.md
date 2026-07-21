@@ -97,30 +97,42 @@ config change, not a rewrite:
 else mock. The rest of the codebase (router, repo, tests) only ever depends on the `Analyzer`
 interface.
 
-## Deploying to Render
+## Deploying
+
+Split across two hosts, each doing what it's best at: **Vercel** for the Next.js frontend (same
+team builds both — zero config), **Render** for the API + Postgres (Vercel's serverless model
+doesn't fit a stateful Express app well: its free-tier request body limit is 4.5MB, well under
+this app's 20MB audio upload cap, and Vercel doesn't host a database at all). This is the
+standard split real teams use, not a compromise.
+
+### 1. API + Postgres → Render
 
 `render.yaml` at the repo root is a [Render Blueprint](https://render.com/docs/blueprint-spec) —
-it provisions Postgres, the API, and the web app from one file, reusing the same Dockerfiles as
-local Docker Compose. No CLI needed, free tier requires no credit card.
+provisions Postgres and the API from one file, reusing the same Dockerfile as local Docker
+Compose. No CLI, free tier requires no credit card.
 
-1. Push this repo to GitHub (see below).
-2. In the [Render dashboard](https://dashboard.render.com): **New → Blueprint**, pick this repo.
-   Render reads `render.yaml` and creates `songdna-db` (Postgres), `songdna-api`, and
-   `songdna-web`.
-3. Two env vars are intentionally left blank in the blueprint (`sync: false`) — set them in the
-   dashboard after the first deploy:
-   - On **songdna-api**: set `GEMINI_API_KEY` (free, from aistudio.google.com/apikey) or
-     `ANTHROPIC_API_KEY`.
-   - On **songdna-web**: set `NEXT_PUBLIC_API_URL` to `https://<songdna-api's-assigned-url>/api`
-     (visible on the songdna-api service page once it's deployed) — then trigger a manual
-     redeploy of songdna-web, since `NEXT_PUBLIC_*` vars are baked into the JS bundle at build
-     time, not read at runtime.
-4. Once both are green, songdna-web's URL is the live link.
+1. In the [Render dashboard](https://dashboard.render.com): **New → Blueprint**, pick this repo.
+   Render reads `render.yaml` and creates `songdna-db` (Postgres) and `songdna-api`.
+2. On the **songdna-api** service, set `GEMINI_API_KEY` (free, from aistudio.google.com/apikey)
+   or `ANTHROPIC_API_KEY` — left blank in the blueprint on purpose since secrets shouldn't be
+   committed.
+3. Once deployed, copy songdna-api's assigned URL from its service page (e.g.
+   `https://songdna-api-xxxx.onrender.com`) — you'll need it for step 2 below.
 
-**Free-tier tradeoffs, so they don't look like bugs:** the free web services spin down after 15
-minutes idle — the first request after that takes ~30-60s to wake back up. The free Postgres
-instance is auto-deleted after 30 days unless upgraded to a paid plan. Fine for a portfolio demo
-you're actively sending links to; not a permanent hosting solution.
+### 2. Web app → Vercel
+
+1. At [vercel.com/new](https://vercel.com/new), import this GitHub repo.
+2. Set **Root Directory** to `apps/web` (Vercel auto-detects Next.js from there — it builds
+   natively, not via `apps/web/Dockerfile`, which exists only for local Docker Compose).
+3. Add an environment variable: `NEXT_PUBLIC_API_URL` = `https://<songdna-api's-url>/api`
+   (the URL from step 1.3, with `/api` appended).
+4. Deploy. Vercel's assigned URL is the live link.
+
+**Free-tier tradeoffs, so they don't look like bugs:** Render's free web service spins down
+after 15 minutes idle — the first request after that takes ~30-60s to wake back up. Render's
+free Postgres is auto-deleted after 30 days unless upgraded to a paid plan. Vercel's free tier
+has no such sleep/expiry for the frontend. Fine for a portfolio demo you're actively sending
+links to; not a permanent hosting solution.
 
 ## Pushing to your own GitHub
 
