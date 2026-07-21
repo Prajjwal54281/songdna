@@ -20,10 +20,10 @@ export const env = {
   anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
   anthropicModel: process.env.ANTHROPIC_MODEL ?? "claude-opus-4-8",
 
-  // Free tier via Google AI Studio (aistudio.google.com/apikey) — no card
+  // Free tier via Google AI Studio (aistudio.google.com/apikey), no card
   // required for the free quota. Used for budget-conscious prototyping and
   // as the default local-dev LLM path. "gemini-flash-latest" is Google's own
-  // rolling alias — pin-dated model IDs (e.g. "gemini-2.5-flash") have been
+  // rolling alias. Pin-dated model IDs (e.g. "gemini-2.5-flash") have been
   // observed returning 404 "no longer available to new users" within months
   // of release, so the alias is the safer default here.
   geminiApiKey: process.env.GEMINI_API_KEY ?? "",

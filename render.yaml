@@ -1,9 +1,9 @@
-# Render Blueprint — deploys Postgres + the API from one file. The web app
-# deploys separately to Vercel (its ideal host for a Next.js app) — see
+# Render Blueprint. Deploys Postgres and the API from one file. The web app
+# deploys separately to Vercel (its ideal host for a Next.js app). See
 # README.md "Deploying" for the full split and exact steps.
 #
 # GEMINI_API_KEY / ANTHROPIC_API_KEY are marked `sync: false` since secrets
-# shouldn't be committed — set at least one manually in the dashboard after
+# shouldn't be committed. Set at least one manually in the dashboard after
 # the first deploy.
 
 databases:

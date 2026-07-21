@@ -1,4 +1,4 @@
-// Load .env before any other import touches process.env — docker-compose
+// Load .env before any other import touches process.env. docker-compose
 // injects env vars directly and doesn't need this, but local `npm run dev`
 // does. quiet:true keeps a missing .env (e.g. in CI) from logging a warning.
 import "dotenv/config";

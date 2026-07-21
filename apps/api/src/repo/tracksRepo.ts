@@ -82,7 +82,7 @@ function toAnalysis(row: AnalysisRow): Analysis {
 }
 
 /** Postgres-backed persistence for tracks and their Song DNA analyses. Plain
- * parameterized SQL rather than an ORM — the query surface here is small
+ * parameterized SQL rather than an ORM. The query surface here is small
  * enough that an ORM would add indirection without saving real code. */
 export class TracksRepo {
   constructor(private readonly pool: Pool) {}

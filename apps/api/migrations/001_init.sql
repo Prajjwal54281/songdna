@@ -2,7 +2,7 @@
 --
 -- A "track" is a piece of metadata submitted for analysis (title, artist,
 -- optional lyrics/description text). A "analysis" is one LLM-produced Song
--- DNA result for a track — kept as its own row (not just a column on track)
+-- DNA result for a track, kept as its own row (not just a column on track)
 -- so re-analyzing a track preserves history and lets the UI show confidence
 -- drift across model/prompt versions.
 

@@ -43,7 +43,7 @@ export function createRouter(repo: TracksRepo, analyzer: Analyzer): Router {
         res.status(201).json({ track, analysis });
       } catch (err) {
         // Track is already persisted; analysis failure shouldn't 500 the whole
-        // request — the client can retry analysis via POST /tracks/:id/analyze.
+        // request. The client can retry analysis via POST /tracks/:id/analyze.
         console.error("Analysis failed for track", track.id, err);
         res.status(201).json({
           track,
@@ -87,7 +87,7 @@ export function createRouter(repo: TracksRepo, analyzer: Analyzer): Router {
 
   // Upload a WAV file for a track: decodes the actual PCM samples and stores
   // objective signal features (tempo/energy/brightness/noisiness). Does not
-  // itself trigger LLM re-analysis — call POST /tracks/:id/analyze afterward
+  // itself trigger LLM re-analysis. Call POST /tracks/:id/analyze afterward
   // to fold the measured features into a fresh Song DNA.
   router.post(
     "/tracks/:id/audio",

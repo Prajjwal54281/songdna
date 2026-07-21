@@ -38,7 +38,7 @@ export function sineWave(freqHz: number, durationSec: number, sampleRate: number
   return samples;
 }
 
-/** A periodic click train at the given tempo — a simple, unambiguous signal
+/** A periodic click train at the given tempo, a simple, unambiguous signal
  * for exercising the tempo estimator. */
 export function clickTrain(bpm: number, durationSec: number, sampleRate: number): Float32Array {
   const n = Math.floor(durationSec * sampleRate);
@@ -47,7 +47,7 @@ export function clickTrain(bpm: number, durationSec: number, sampleRate: number)
   const clickLength = Math.round(0.005 * sampleRate); // 5ms click
   for (let start = 0; start < n; start += periodSamples) {
     for (let i = 0; i < clickLength && start + i < n; i++) {
-      // Decaying click, not a hard impulse — closer to a real percussive onset.
+      // Decaying click, not a hard impulse. Closer to a real percussive onset.
       samples[start + i] = 0.9 * (1 - i / clickLength);
     }
   }

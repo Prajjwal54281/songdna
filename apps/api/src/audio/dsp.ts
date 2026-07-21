@@ -6,7 +6,7 @@ import type { DecodedAudio } from "./wav.js";
  * power-of-two length. This is the one place a hand-rolled implementation of
  * a well-known algorithm is the right call: FFT correctness is commodity, and
  * the value of this project is the pipeline architecture around it, not
- * proving the FFT itself from scratch — but pulling in a dependency for ~30
+ * proving the FFT itself from scratch, but pulling in a dependency for ~30
  * lines of standard math would be adding a dependency for no real benefit.
  */
 function fftInPlace(re: Float64Array, im: Float64Array): void {
@@ -109,7 +109,7 @@ export function spectralCentroidHz(samples: Float32Array, sampleRate: number): n
  * Naive tempo estimate via autocorrelation of a half-wave-rectified onset
  * envelope. This is not a real beat tracker (no phase alignment, no
  * dynamic-programming beat sequence, no meter detection like
- * librosa/essentia/madmom implement) — it finds the strongest periodicity in
+ * librosa/essentia/madmom implement). It finds the strongest periodicity in
  * the energy envelope within a plausible tempo range and reports that. Good
  * enough to ground "tempo_feel" in a real measurement; not a replacement for
  * a dedicated beat-tracking algorithm. Returns null when the track is too
@@ -141,7 +141,7 @@ export function estimateTempoBpm(samples: Float32Array, sampleRate: number): num
   }
 
   const mean = onset.reduce((a, b) => a + b, 0) / onset.length;
-  if (mean < 1e-5) return null; // effectively silent — no onsets to lock onto
+  if (mean < 1e-5) return null; // effectively silent, no onsets to lock onto
 
   const minLag = Math.max(1, Math.round((60 / maxBpm) * (sampleRate / hop)));
   const maxLag = Math.min(frameCount - 1, Math.round((60 / minBpm) * (sampleRate / hop)));

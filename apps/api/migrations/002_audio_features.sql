@@ -1,5 +1,5 @@
 -- Objective signal features extracted by decoding an uploaded WAV file's
--- actual PCM samples (see src/audio/wav.ts + src/audio/dsp.ts) — distinct
+-- actual PCM samples (see src/audio/wav.ts + src/audio/dsp.ts). Distinct
 -- from `analyses`, which holds the LLM's qualitative interpretation. A track
 -- can have audio uploaded, re-analyzed metadata, both, or neither.
 

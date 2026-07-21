@@ -1,10 +1,10 @@
 /**
- * Minimal WAV (RIFF/WAVE) decoder — hand-written against the format spec
+ * Minimal WAV (RIFF/WAVE) decoder, hand-written against the format spec
  * rather than pulled in as a dependency, since the format is small and
  * well-defined and this is the one place in the project where "decode the
  * actual bytes" is the whole point. Supports uncompressed PCM (8/16/24/32-bit
  * integer) and 32-bit IEEE float, mono or stereo (downmixed to mono for
- * feature extraction — see audio/dsp.ts).
+ * feature extraction, see audio/dsp.ts).
  *
  * Deliberately out of scope: compressed formats (MP3, AAC, OGG, FLAC). A
  * real product would transcode those via ffmpeg before this step; adding a
@@ -66,7 +66,7 @@ export function decodeWav(buf: Buffer): DecodedAudio {
   }
   if (audioFormat !== 1 && audioFormat !== 3) {
     throw new UnsupportedAudioError(
-      `Unsupported WAV audio format code ${audioFormat} — only PCM (1) and IEEE float (3) are supported.`,
+      `Unsupported WAV audio format code ${audioFormat}. Only PCM (1) and IEEE float (3) are supported.`,
     );
   }
 

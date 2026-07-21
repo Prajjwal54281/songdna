@@ -7,8 +7,8 @@ import { SONG_DNA_JSON_SCHEMA, buildSystemPrompt, buildUserContent } from "./pro
  * Free-tier analyzer for budget-conscious prototyping: Google's Gemini API has a
  * genuinely free developer tier (aistudio.google.com), which is why this project
  * defaults to it for local development and demos rather than the paid Anthropic
- * path. Same Analyzer interface, same output schema, same downstream code —
- * swapping providers is a config change (LLM_PROVIDER=gemini|anthropic), not a
+ * path. Same Analyzer interface, same output schema, same downstream code.
+ * Swapping providers is a config change (LLM_PROVIDER=gemini|anthropic), not a
  * rewrite. That interchangeability is the point: Song DNA's LLM boundary is one
  * seam, not scattered through the codebase.
  */

@@ -12,7 +12,7 @@ import { MockAnalyzer } from "./mockAnalyzer.js";
  * with zero external dependencies.
  *
  * Every implementation shares the same Analyzer interface and the same
- * SONG_DNA_JSON_SCHEMA (analysis/prompt.ts) — swapping providers is a config
+ * SONG_DNA_JSON_SCHEMA (analysis/prompt.ts). Swapping providers is a config
  * change, not a rewrite of the analysis pipeline.
  */
 export function createAnalyzer(): Analyzer {
@@ -38,7 +38,7 @@ export function createAnalyzer(): Analyzer {
     case "mock":
     default:
       console.warn(
-        "[songdna] No LLM provider configured — using the deterministic mock analyzer. " +
+        "[songdna] No LLM provider configured. Using the deterministic mock analyzer. " +
           "Set GEMINI_API_KEY (free tier: aistudio.google.com/apikey) or ANTHROPIC_API_KEY " +
           "in .env for real model-driven Song DNA analysis.",
       );

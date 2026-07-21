@@ -1,7 +1,7 @@
 FROM node:20-slim AS build
 WORKDIR /app
 # NEXT_PUBLIC_* vars are baked into the JS bundle at build time, not read at
-# runtime — must be passed as a build arg, not just a runtime env var. Render
+# runtime. Must be passed as a build arg, not just a runtime env var. Render
 # passes Docker-runtime services' configured env vars through as build args
 # automatically; other platforms may need --build-arg explicitly.
 ARG NEXT_PUBLIC_API_URL

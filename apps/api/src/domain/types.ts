@@ -23,7 +23,7 @@ export const SongDnaSchema = z.object({
 });
 export type SongDna = z.infer<typeof SongDnaSchema>;
 
-/** Input a client submits for analysis — metadata only; audio (if any) is a separate upload. */
+/** Input a client submits for analysis: metadata only. Audio (if any) is a separate upload. */
 export const TrackInputSchema = z.object({
   title: z.string().min(1).max(200),
   artist: z.string().min(1).max(200),
@@ -47,7 +47,7 @@ export interface Analysis {
 
 /**
  * Objective signal features extracted by actually decoding an uploaded WAV
- * file's PCM samples — not metadata, not an LLM guess. See
+ * file's PCM samples, not metadata, not an LLM guess. See
  * src/audio/{wav,dsp}.ts for how each of these is computed. `tempoBpm` is a
  * naive autocorrelation-based estimate (not full beat-tracking) and may be
  * null for very short or ambiguous audio.

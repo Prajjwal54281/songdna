@@ -10,7 +10,7 @@ const migrationsDir = path.join(__dirname, "..", "migrations");
 /**
  * Minimal, dependency-free migration runner: applies every .sql file in
  * migrations/ in filename order, tracking what's already run in a
- * `schema_migrations` table. No rollback support — this is a weekend
+ * `schema_migrations` table. No rollback support. This is a weekend
  * project, not a migration framework; a real one would reach for
  * node-pg-migrate or similar.
  */

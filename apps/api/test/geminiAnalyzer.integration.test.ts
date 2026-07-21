@@ -4,7 +4,7 @@ import { GeminiAnalyzer } from "../src/analysis/geminiAnalyzer.js";
 import { SongDnaSchema } from "../src/domain/types.js";
 
 /**
- * Real integration test against the live Gemini API — not mocked. Runs only
+ * Real integration test against the live Gemini API, not mocked. Runs only
  * when GEMINI_API_KEY is present (e.g. in a local .env), so CI and other
  * contributors' machines stay green without needing a secret. This is the
  * one test in the suite that costs an actual API call; everything else
@@ -40,7 +40,7 @@ describe.skipIf(!hasKey)("GeminiAnalyzer (live)", () => {
     expect(() => SongDnaSchema.parse(dna)).not.toThrow();
     expect(dna.genres.length).toBeGreaterThan(0);
     // A real model given a measured low-energy, ~64bpm track shouldn't call
-    // it high-energy — this is the actual value of grounding the prompt in
+    // it high-energy. This is the actual value of grounding the prompt in
     // decoded signal rather than letting the LLM guess from text alone.
     expect(dna.energy).toBeLessThan(0.5);
   }, 30000);

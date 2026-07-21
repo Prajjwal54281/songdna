@@ -12,7 +12,7 @@ const TAG_SCHEMA = {
 
 /** JSON Schema mirror of SongDnaSchema, shared by every structured-output LLM
  * analyzer (Anthropic, Gemini). Kept in lockstep by hand since the shape is
- * small and stable — if it grows, switch to a zod-to-json-schema generator. */
+ * small and stable. If it grows, switch to a zod-to-json-schema generator. */
 export const SONG_DNA_JSON_SCHEMA = {
   type: "object",
   properties: {
@@ -40,12 +40,13 @@ fingerprint:
 - tempo_feel: a short phrase describing the rhythmic feel (e.g. "driving", "laid-back", "frantic").
 - energy: overall energy level in [0,1], where 0 is very low-energy/ambient and 1 is maximally intense.
 - summary: one paragraph in plain language explaining the reasoning, written for the artist, not a
-  developer — reference specific cues from the input rather than restating the tags.
+  developer. Reference specific cues from the input rather than restating the tags. Write the
+  summary in plain punctuation: commas and periods, not em dashes.
 
 When measured audio features are provided, treat them as ground truth for anything they cover
-(e.g. tempo, energy) and raise your confidence accordingly — don't second-guess a measured tempo
+(e.g. tempo, energy) and raise your confidence accordingly. Don't second-guess a measured tempo
 against a text-based hunch. When only text metadata is available, confidence scores reflect
-genuine uncertainty from limited signal — do not default everything to high confidence. If the
+genuine uncertainty from limited signal. Do not default everything to high confidence. If the
 input is sparse, say so in the summary and keep confidence scores modest.`;
 }
 
